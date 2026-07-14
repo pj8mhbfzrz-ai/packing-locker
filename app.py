@@ -28,11 +28,12 @@ def convert_to_interactive_note(filtered_items, selected_categories, note_title)
     <p style="color: #888; margin-top: 0; font-size: 14px;">Interactive Packing Checklist</p>
 """
     for cat in selected_categories:
-        cat_items = [i for i in filtered_items if i["category"] == cat]
+        cat_strip = cat.strip()
+        cat_items = [i for i in filtered_items if i["category"].strip() == cat_strip]
         if cat_items:
-            html_output += f"\n    <h2>{cat}</h2>\n"
+            html_output += f"\n    <h2>{cat_strip}</h2>\n"
             for item in cat_items:
-                safe_id = f"item_{item['name'].lower().replace(' ', '_')}_{cat.lower().replace(' ', '_')}"
+                safe_id = f"item_{item['name'].lower().replace(' ', '_')}_{cat_strip.lower().replace(' ', '_')}"
                 html_output += f'    <div class="checklist-item"><input type="checkbox" id="{safe_id}"><label for="{safe_id}">{item["name"]}</label></div>\n'
     html_output += "</body>\n</html>"
     return html_output
@@ -41,119 +42,303 @@ def convert_to_interactive_note(filtered_items, selected_categories, note_title)
 def get_default_locker_data():
     return {
         "categories": [
-            "⛺ Camping", "🌊 Surf & Water Sports", "🍳 Cooking", "👕 Clothing", "🎣 Fishing", 
-            "🛶 Boating", "🧗 Climbing", "🏃 Trail Running", "📱 Devices", "🎒 Backpacking", 
-            "🧭 Hiking", "🕶️ Accessories", "📋 Tasks", "🚴 Cycling", "🎿 Ski & Snowboard", 
-            "✨ Ambiance", "🚌 VW Bus Trip", "🤖 Other"
+            "⛺ Camping", "✨ Ambiance", "👕 Clothing", "🪥 Toiletries", "🍳 Cooking", 
+            "🎒 Backpacking", "🧭 Hiking", "🌊 Surf & Water Sports", "🎣 Fishing", 
+            "🛶 Boating", "🧗 Climbing", "🏃 Trail Running", "🚴 Cycling", "🎿 Skiing", 
+            "🚌 VW Bus Trip", "📱 Devices", "📋 Tasks", "🤖 Other"
         ],
-        "weather_profiles": ["🌤️ Always", "🔥 Hot", "💧 Rain", "❄️ Snow"],
+        "weather_profiles": ["🌤️ Always", "🔥 Hot", "❄️ Snow"],
         "master_items": [
+            # ⛺ Camping
             {"name": "Tent", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
-            {"name": "Tent stakes", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
             {"name": "Footprint", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
+            {"name": "Tent stakes", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
             {"name": "Sleeping bags", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
             {"name": "Sleeping pads", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
+            {"name": "Insulated high R-value sleeping pads", "category": "⛺ Camping", "weather": ["❄️ Snow"]},
             {"name": "Sheet", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
             {"name": "Comforter", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
             {"name": "Heavy Blanket", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
             {"name": "Full sized pillow", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
             {"name": "Shadowcaster shade", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
-            {"name": "Camp table", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
             {"name": "Camp chairs", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
             {"name": "Alite chairs", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
-            {"name": "Multi-tool or pocket knife", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
+            {"name": "Camp table", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
             {"name": "First aid kit", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
-            {"name": "Trash bags", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
+            {"name": "Multi-tool or pocket knife", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
+            {"name": "Repair kit", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
             {"name": "Duct tape", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
             {"name": "Paracord", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
-            {"name": "Repair kit", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
-            {"name": "Insulated high R-value sleeping pad", "category": "⛺ Camping", "weather": ["❄️ Snow"]},
-            {"name": "Hand & toe warmers", "category": "⛺ Camping", "weather": ["❄️ Snow"]},
+            {"name": "Trash bags", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
             {"name": "Lanterns", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
-            {"name": "Surfboard(s)", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
-            {"name": "Board bag", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
-            {"name": "Surfboard leash", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
-            {"name": "Fins", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
-            {"name": "Fin key", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
-            {"name": "Spare fin screws", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
-            {"name": "Wax", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
-            {"name": "Waterproof dry bag", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
-            {"name": "Vehicle tie-down straps / soft racks", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
-            {"name": "Board Sock", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
-            {"name": "Rash guard / UV protection shirt", "category": "🌊 Surf & Water Sports", "weather": ["🔥 Hot"]},
-            {"name": "Tropical surfboard wax (basecoat + topcoat)", "category": "🌊 Surf & Water Sports", "weather": ["🔥 Hot"]},
-            {"name": "Sunscreen - reefsafe", "category": "🌊 Surf & Water Sports", "weather": ["🔥 Hot"]},
-            {"name": "Wetsuit (4/3mm or 5/4mm)", "category": "🌊 Surf & Water Sports", "weather": ["❄️ Snow"]},
-            {"name": "Neoprene booties", "category": "🌊 Surf & Water Sports", "weather": ["❄️ Snow"]},
-            {"name": "Cold-water surfboard wax", "category": "🌊 Surf & Water Sports", "weather": ["❄️ Snow"]},
-            {"name": "Butane camp stove", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Propane camp stove", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Ultralight camp stove", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Fuel canister(s)", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Lighter / matches / flint striker", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Big pan", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Cutting board", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Kitchen knife", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Nesting cookset (pots, pans, lids)", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Spatula", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Cooking tongs", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Stove grate", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Large serving spoon", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Eating utensils (spork/knife)", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Plates & bowls", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Insulated mug", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Biodegradable camp soap", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Sponge / scrubber", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Quick-dry dish towel", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Paper towels", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Table cloth", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Silverware", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Napkins", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Water filtration system or large water jug", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "REI Cooler", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Coleman Cooler", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
-            {"name": "Icepacks/Ice", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Wood", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
+            {"name": "New paper or fire starters", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
+            {"name": "Hand & toe warmers", "category": "⛺ Camping", "weather": ["❄️ Snow"]},
+            
+            # ✨ Ambiance
+            {"name": "Rechargeable LED string lights", "category": "✨ Ambiance", "weather": ["🌤️ Always"]},
+            {"name": "Bluetooth speaker", "category": "✨ Ambiance", "weather": ["🌤️ Always"]},
+            {"name": "Picnic blanket", "category": "✨ Ambiance", "weather": ["🌤️ Always"]},
+            {"name": "Puffin blanket", "category": "✨ Ambiance", "weather": ["🌤️ Always"]},
+            {"name": "Pendelton blanket", "category": "✨ Ambiance", "weather": ["🌤️ Always"]},
+            {"name": "Citronella candle / incense sticks", "category": "✨ Ambiance", "weather": ["🔥 Hot"]},
+            {"name": "Table cloth", "category": "✨ Ambiance", "weather": ["🌤️ Always"]},
+            {"name": "Silverware", "category": "✨ Ambiance", "weather": ["🌤️ Always"]},
+            {"name": "Cute coffee mugs", "category": "✨ Ambiance", "weather": ["🌤️ Always"]},
+            
+            # 👕 Clothing
             {"name": "T-shirts", "category": "👕 Clothing", "weather": ["🌤️ Always"]},
             {"name": "Tank tops", "category": "👕 Clothing", "weather": ["🌤️ Always"]},
+            {"name": "Underwear/Bras", "category": "👕 Clothing", "weather": ["🌤️ Always"]},
+            {"name": "Socks", "category": "👕 Clothing", "weather": ["🌤️ Always"]},
             {"name": "Quick-dry shorts", "category": "👕 Clothing", "weather": ["🌤️ Always"]},
             {"name": "Quick-dry pants", "category": "👕 Clothing", "weather": ["🌤️ Always"]},
             {"name": "Yoga pants", "category": "👕 Clothing", "weather": ["🌤️ Always"]},
+            {"name": "Puffy jacket", "category": "👕 Clothing", "weather": ["🌤️ Always"]},
+            {"name": "Sweatshirt", "category": "👕 Clothing", "weather": ["🌤️ Always"]},
+            {"name": "Windbreaker jacket", "category": "👕 Clothing", "weather": ["🌤️ Always"]},
+            {"name": "Rain jacket (waterproof shell)", "category": "👕 Clothing", "weather": ["🌤️ Always"]},
             {"name": "Sweatpants", "category": "👕 Clothing", "weather": ["🌤️ Always"]},
             {"name": "Sleeping clothes", "category": "👕 Clothing", "weather": ["🌤️ Always"]},
-            {"name": "Sweatshirt", "category": "👕 Clothing", "weather": ["🌤️ Always"]},
-            {"name": "Underwear/Bras", "category": "👕 Clothing", "weather": ["🌤️ Always"]},
-            {"name": "Rain jacket (waterproof shell)", "category": "👕 Clothing", "weather": ["🌤️ Always", "💧 Rain"]},
-            {"name": "Windbreaker jacket", "category": "👕 Clothing", "weather": ["🌤️ Always"]},
-            {"name": "Socks", "category": "👕 Clothing", "weather": ["🌤️ Always"]},
             {"name": "Swimwear", "category": "👕 Clothing", "weather": ["🔥 Hot"]},
             {"name": "Wide-brim sun hat or baseball cap", "category": "👕 Clothing", "weather": ["🔥 Hot"]},
             {"name": "Thermal long-underwear bottoms", "category": "👕 Clothing", "weather": ["❄️ Snow"]},
-            {"name": "Middle layer top", "category": "👕 Clothing", "weather": ["❄️ Snow"]},
-            {"name": "Insulating fleece or down puffy jacket", "category": "👕 Clothing", "weather": ["❄️ Snow"]},
+            {"name": "Mid layer top", "category": "👕 Clothing", "weather": ["❄️ Snow"]},
             {"name": "Heavyweight wool socks", "category": "👕 Clothing", "weather": ["❄️ Snow"]},
-            {"name": "High-capacity power bank", "category": "📱 Devices", "weather": ["🌤️ Always"]},
-            {"name": "Ultralight power bank", "category": "📱 Devices", "weather": ["🌤️ Always"]},
-            {"name": "Charging cables (USB-C, Lightning, etc.)", "category": "📱 Devices", "weather": ["🌤️ Always"]},
-            {"name": "GPS", "category": "📱 Devices", "weather": ["🌤️ Always"]},
-            {"name": "Headlamp & charging cords", "category": "📱 Devices", "weather": ["🌤️ Always"]},
-            {"name": "Offline navigation maps (pre-downloaded)", "category": "📱 Devices", "weather": ["🌤️ Always"]},
-            {"name": "Waterproof phone pouch", "category": "📱 Devices", "weather": ["🌤️ Always"]},
+            
+            # 🪥 Toiletries
+            {"name": "Toothbrush", "category": "🪥 Toiletries", "weather": ["🌤️ Always"]},
+            {"name": "Toothpaste", "category": "🪥 Toiletries", "weather": ["🌤️ Always"]},
+            {"name": "Deodorant", "category": "🪥 Toiletries", "weather": ["🌤️ Always"]},
+            {"name": "Soap", "category": "🪥 Toiletries", "weather": ["🌤️ Always"]},
+            {"name": "Shampoo", "category": "🪥 Toiletries", "weather": ["🌤️ Always"]},
+            {"name": "Conditioner", "category": "🪥 Toiletries", "weather": ["🌤️ Always"]},
+            {"name": "Razor", "category": "🪥 Toiletries", "weather": ["🌤️ Always"]},
+            {"name": "Sunscreen", "category": "🪥 Toiletries", "weather": ["🌤️ Always"]},
+            {"name": "Mosquito repellant", "category": "🪥 Toiletries", "weather": ["🌤️ Always"]},
+            {"name": "Pain Meds", "category": "🪥 Toiletries", "weather": ["🌤️ Always"]},
+            {"name": "Allergy Meds", "category": "🪥 Toiletries", "weather": ["🌤️ Always"]},
+            {"name": "Other Meds", "category": "🪥 Toiletries", "weather": ["🌤️ Always"]},
+            {"name": "Tweezers", "category": "🪥 Toiletries", "weather": ["🌤️ Always"]},
+            {"name": "Nail Clippers", "category": "🪥 Toiletries", "weather": ["🌤️ Always"]},
+            
+            # 🍳 Cooking
+            {"name": "Propane camp stove", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Butane camp stove", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Ultralight camp stove", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Fuel canister(s)", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Lighter / matches / flint striker", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Stove grate", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "REI Cooler", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Coleman Cooler", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Icepacks/Ice", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Water filtration system or large water jug", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Nesting cookset (pots, pans, lids)", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Big pan", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Cutting board", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Kitchen knife", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Spatula", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Cooking tongs", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Large serving spoon", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Rotating roasting sticks", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Plates & bowls", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Eating utensils (spork/knife)", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Napkins", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Paper towels", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Spices – salt, pepper, etc", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Biodegradable camp soap", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Sponge / scrubber", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            {"name": "Quick-dry dish towel", "category": "🍳 Cooking", "weather": ["🌤️ Always"]},
+            
+            # 🎒 Backpacking
+            {"name": "Backpacks", "category": "🎒 Backpacking", "weather": ["🌤️ Always"]},
+            {"name": "Ultralight sleeping pads", "category": "🎒 Backpacking", "weather": ["🌤️ Always"]},
+            {"name": "Foam 40”", "category": "🎒 Backpacking", "weather": ["🌤️ Always"]},
+            {"name": "Slipcover duo 40”", "category": "🎒 Backpacking", "weather": ["🌤️ Always"]},
+            {"name": "Backpacking pillow", "category": "🎒 Backpacking", "weather": ["🌤️ Always"]},
+            {"name": "Bear canister or food hang bag with paracord", "category": "🎒 Backpacking", "weather": ["🌤️ Always"]},
+            {"name": "Water Filter", "category": "🎒 Backpacking", "weather": ["🌤️ Always"]},
+            {"name": "Lightweight backpacking stove", "category": "🎒 Backpacking", "weather": ["🌤️ Always"]},
+            {"name": "Lightweight cookset", "category": "🎒 Backpacking", "weather": ["🌤️ Always"]},
+            {"name": "Trowel", "category": "🎒 Backpacking", "weather": ["🌤️ Always"]},
+            {"name": "Biodegradable soap", "category": "🎒 Backpacking", "weather": ["🌤️ Always"]},
+            
+            # 🧭 Hiking
+            {"name": "Daypack", "category": "🧭 Hiking", "weather": ["🌤️ Always"]},
+            {"name": "Hydration bladder", "category": "🧭 Hiking", "weather": ["🌤️ Always"]},
+            {"name": "Water bottles (2L capacity)", "category": "🧭 Hiking", "weather": ["🌤️ Always"]},
+            {"name": "Topographic map & physical compass", "category": "🧭 Hiking", "weather": ["🌤️ Always"]},
+            {"name": "Trekking poles", "category": "🧭 Hiking", "weather": ["🌤️ Always"]},
+            {"name": "Moleskin / blister kit", "category": "🧭 Hiking", "weather": ["🌤️ Always"]},
+            {"name": "High-energy trail mix & snacks", "category": "🧭 Hiking", "weather": ["🌤️ Always"]},
+            
+            # 🌊 Surf & Water Sports
+            {"name": "Surfboard(s)", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
+            {"name": "Fins", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
+            {"name": "Towel", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
+            {"name": "Changing bin", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
+            {"name": "Water jug", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
+            {"name": "Board bag", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
+            {"name": "Board Sock", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
+            {"name": "Surfboard leash", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
+            {"name": "Fin key", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
+            {"name": "Spare fin screws", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
+            {"name": "Vehicle tie-down straps / soft racks", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
+            {"name": "Waterproof dry bag", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
+            {"name": "Rash guard / UV protection shirt", "category": "🌊 Surf & Water Sports", "weather": ["🔥 Hot"]},
+            {"name": "Sunscreen - reef safe", "category": "🌊 Surf & Water Sports", "weather": ["🔥 Hot"]},
+            {"name": "Tropical surfboard wax (basecoat + topcoat)", "category": "🌊 Surf & Water Sports", "weather": ["🔥 Hot"]},
+            {"name": "Wetsuit (4/3mm or 5/4mm)", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
+            {"name": "Neoprene booties/gloves", "category": "🌊 Surf & Water Sports", "weather": ["❄️ Snow"]},
+            {"name": "Cold-water surfboard wax", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
+            {"name": "Ear drops", "category": "🌊 Surf & Water Sports", "weather": ["🌤️ Always"]},
+            
+            # 🎣 Fishing
+            {"name": "Fishing rods", "category": "🎣 Fishing", "weather": ["🌤️ Always"]},
+            {"name": "Tenkara Rods", "category": "🎣 Fishing", "weather": ["🌤️ Always"]},
+            {"name": "Flies", "category": "🎣 Fishing", "weather": ["🌤️ Always"]},
+            {"name": "Line & tippet", "category": "🎣 Fishing", "weather": ["🌤️ Always"]},
+            {"name": "Fishing license", "category": "🎣 Fishing", "weather": ["🌤️ Always"]},
+            {"name": "Needle-nose pliers with wire cutters", "category": "🎣 Fishing", "weather": ["🌤️ Always"]},
+            {"name": "Line nippers", "category": "🎣 Fishing", "weather": ["🌤️ Always"]},
+            {"name": "Patagonia fishing backpack", "category": "🎣 Fishing", "weather": ["🌤️ Always"]},
+            {"name": "Chain for caught fish", "category": "🎣 Fishing", "weather": ["🌤️ Always"]},
+            {"name": "Fishing waders", "category": "🎣 Fishing", "weather": ["❄️ Snow"]},
+            {"name": "Insulated wading boots", "category": "🎣 Fishing", "weather": ["❄️ Snow"]},
+            
+            # 🛶 Boating
+            {"name": "Life jackets / PFDs", "category": "🛶 Boating", "weather": ["🌤️ Always"]},
+            {"name": "Paddles or oars", "category": "🛶 Boating", "weather": ["🌤️ Always"]},
+            {"name": "Safety throw line", "category": "🛶 Boating", "weather": ["🌤️ Always"]},
+            {"name": "Inflatable kayak", "category": "🛶 Boating", "weather": ["🌤️ Always"]},
+            {"name": "Explorer 300", "category": "🛶 Boating", "weather": ["🌤️ Always"]},
+            {"name": "Large Pump", "category": "🛶 Boating", "weather": ["🌤️ Always"]},
+            {"name": "Bilge pump or bailer", "category": "🛶 Boating", "weather": ["🌤️ Always"]},
+            {"name": "Dry bag", "category": "🛶 Boating", "weather": ["🌤️ Always"]},
+            
+            # 🧗 Climbing
+            {"name": "Climbing harness", "category": "🧗 Climbing", "weather": ["🌤️ Always"]},
+            {"name": "Climbing shoes", "category": "🧗 Climbing", "weather": ["🌤️ Always"]},
+            {"name": "Climbing helmet", "category": "🧗 Climbing", "weather": ["🌤️ Always"]},
+            {"name": "Chalk bag with chalk", "category": "🧗 Climbing", "weather": ["🌤️ Always"]},
+            {"name": "Dynamic climbing rope", "category": "🧗 Climbing", "weather": ["🌤️ Always"]},
+            {"name": "Belay device", "category": "🧗 Climbing", "weather": ["🌤️ Always"]},
+            {"name": "Locking carabiners", "category": "🧗 Climbing", "weather": ["🌤️ Always"]},
+            {"name": "Anchor material", "category": "🧗 Climbing", "weather": ["🌤️ Always"]},
+            {"name": "Nylon runners / slings", "category": "🧗 Climbing", "weather": ["🌤️ Always"]},
+            
+            # 🏃 Trail Running
+            {"name": "Trail running shoes", "category": "🏃 Trail Running", "weather": ["🌤️ Always"]},
+            {"name": "Trail running socks", "category": "🏃 Trail Running", "weather": ["🌤️ Always"]},
+            {"name": "Sports bra", "category": "🏃 Trail Running", "weather": ["🌤️ Always"]},
+            {"name": "Running Tank", "category": "🏃 Trail Running", "weather": ["🌤️ Always"]},
+            {"name": "Hydration vest or running belt", "category": "🏃 Trail Running", "weather": ["🌤️ Always"]},
+            {"name": "High-energy blocks", "category": "🏃 Trail Running", "weather": ["🌤️ Always"]},
+            {"name": "Lightweight running shorts", "category": "🏃 Trail Running", "weather": ["🔥 Hot"]},
+            {"name": "Thermal running tights", "category": "🏃 Trail Running", "weather": ["❄️ Snow"]},
+            {"name": "Lightweight windproof gloves", "category": "🏃 Trail Running", "weather": ["❄️ Snow"]},
+            {"name": "Ear-warmer headband", "category": "🏃 Trail Running", "weather": ["❄️ Snow"]},
+            
+            # 🚴 Cycling
+            {"name": "Bike (Road/Gravel/Mountain)", "category": "🚴 Cycling", "weather": ["🌤️ Always"]},
+            {"name": "Helmet", "category": "🚴 Cycling", "weather": ["🌤️ Always"]},
+            {"name": "Cycling lights", "category": "🚴 Cycling", "weather": ["🌤️ Always"]},
+            {"name": "Cycling shoes", "category": "🚴 Cycling", "weather": ["🌤️ Always"]},
+            {"name": "Padded bib shorts / chamois", "category": "🚴 Cycling", "weather": ["🌤️ Always"]},
+            {"name": "Cycling jersey", "category": "🚴 Cycling", "weather": ["🌤️ Always"]},
+            {"name": "Cycling jacket", "category": "🚴 Cycling", "weather": ["🌤️ Always"]},
+            {"name": "Lightweight wind vest", "category": "🚴 Cycling", "weather": ["🌤️ Always"]},
+            {"name": "Water bottles / cages (2x)", "category": "🚴 Cycling", "weather": ["🌤️ Always"]},
+            {"name": "Bike computer", "category": "🚴 Cycling", "weather": ["🌤️ Always"]},
+            {"name": "Saddle bag with spare tube & tire levers", "category": "🚴 Cycling", "weather": ["🌤️ Always"]},
+            {"name": "Mini bike pump or CO2 inflator", "category": "🚴 Cycling", "weather": ["🌤️ Always"]},
+            {"name": "Multi-tool with chain breaker", "category": "🚴 Cycling", "weather": ["🌤️ Always"]},
+            {"name": "Arm & leg warmers", "category": "🚴 Cycling", "weather": ["❄️ Snow"]},
+            {"name": "Thermal shoe covers (booties)", "category": "🚴 Cycling", "weather": ["❄️ Snow"]},
+            
+            # 🎿 Skiing
+            {"name": "Front country Skis", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Backcountry Skis", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Cross-country Skis", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Ski boots", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Ski poles", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Ski helmet", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Goggles (with lenses)", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Waterproof ski jacket", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Waterproof ski bibs", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Puffy Jacket", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Base layers", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Mid layers", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Ski socks (2-3 pairs)", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Heavyweight gloves / mittens", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Lightweight gloves / mittens", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Glove liners", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Balaclava or neck gaiter", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Beacon", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Avy probe", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Shovel", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Backcountry pack", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Skins", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Ice Ax", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Harness/anchors", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Ski pass", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Sno Park permit", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Reserve parking ahead", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Pocket hand warmers", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Ski strap (for carrying skis easily)", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            {"name": "Spare part kit", "category": "🎿 Skiing", "weather": ["❄️ Snow"]},
+            
+            # 🚌 VW Bus Trip
+            {"name": "VW mechanical tool roll & metric sockets", "category": "🚌 VW Bus Trip", "weather": ["🌤️ Always"]},
+            {"name": "Engine oil (Type 4 or preferred weight, 1-2 quarts)", "category": "🚌 VW Bus Trip", "weather": ["🌤️ Always"]},
+            {"name": "Jumper cables", "category": "🚌 VW Bus Trip", "weather": ["🌤️ Always"]},
+            {"name": "Leveling blocks / chocks", "category": "🚌 VW Bus Trip", "weather": ["🌤️ Always"]},
+            {"name": "Shore power extension cord & adapters", "category": "🚌 VW Bus Trip", "weather": ["🌤️ Always"]},
+            {"name": "Water Filter", "category": "🚌 VW Bus Trip", "weather": ["🌤️ Always"]},
+            {"name": "Staples - Salt, pepper, chili flakes, chai, OVOO, soap, foil, Ziplock’s, ramen", "category": "🚌 VW Bus Trip", "weather": ["🌤️ Always"]},
+            {"name": "Toilet", "category": "🚌 VW Bus Trip", "weather": ["🌤️ Always"]},
+            {"name": "Toilet paper", "category": "🚌 VW Bus Trip", "weather": ["🌤️ Always"]},
+            {"name": "Paper towels", "category": "🚌 VW Bus Trip", "weather": ["🌤️ Always"]},
+            {"name": "Charged lights", "category": "🚌 VW Bus Trip", "weather": ["🌤️ Always"]},
+            
+            # 📱 Devices
             {"name": "Phones", "category": "📱 Devices", "weather": ["🌤️ Always"]},
             {"name": "Computers", "category": "📱 Devices", "weather": ["🌤️ Always"]},
             {"name": "Ipad", "category": "📱 Devices", "weather": ["🌤️ Always"]},
             {"name": "Watch", "category": "📱 Devices", "weather": ["🌤️ Always"]},
-            {"name": "Polarized sunglasses", "category": "🕶️ Accessories", "weather": ["🌤️ Always"]},
-            {"name": "Baseball cap", "category": "🕶️ Accessories", "weather": ["🌤️ Always"]},
-            {"name": "Warm beanie (covers ears)", "category": "🕶️ Accessories", "weather": ["❄️ Snow"]},
+            {"name": "High-capacity power bank", "category": "📱 Devices", "weather": ["🌤️ Always"]},
+            {"name": "Ultralight power bank", "category": "📱 Devices", "weather": ["🌤️ Always"]},
+            {"name": "Charging cables (USB-C, Lightning, etc.)", "category": "📱 Devices", "weather": ["🌤️ Always"]},
+            {"name": "Headlamp & charging cords", "category": "📱 Devices", "weather": ["🌤️ Always"]},
+            {"name": "GPS", "category": "📱 Devices", "weather": ["🌤️ Always"]},
+            {"name": "Waterproof phone pouch", "category": "📱 Devices", "weather": ["🌤️ Always"]},
+            
+            # 📋 Tasks
+            {"name": "Fully charge lights, lamps, devices", "category": "📋 Tasks", "weather": ["🌤️ Always"]},
+            {"name": "Download offline maps", "category": "📋 Tasks", "weather": ["🌤️ Always"]},
+            {"name": "Water Bonnie", "category": "📋 Tasks", "weather": ["🌤️ Always"]},
+            {"name": "Water indoor plants/fill jars", "category": "📋 Tasks", "weather": ["🌤️ Always"]},
             {"name": "Take out compost", "category": "📋 Tasks", "weather": ["🌤️ Always"]},
             {"name": "Take down trash", "category": "📋 Tasks", "weather": ["🌤️ Always"]},
-            {"name": "Water indoor plants/fill jars", "category": "📋 Tasks", "weather": ["🌤️ Always"]},
-            {"name": "Water Bonnie", "category": "📋 Tasks", "weather": ["🌤️ Always"]},
             {"name": "Run dishwasher", "category": "📋 Tasks", "weather": ["🌤️ Always"]},
+            
+            # 🤖 Other
+            {"name": "IDs", "category": "🤖 Other", "weather": ["🌤️ Always"]},
+            {"name": "Cash", "category": "🤖 Other", "weather": ["🌤️ Always"]},
             {"name": "Chapstick", "category": "🤖 Other", "weather": ["🌤️ Always"]},
-            {"name": "Electrolytes", "category": "🤖 Other", "weather": ["🌤️ Always"]},
+            {"name": "Polarized sunglasses", "category": "🤖 Other", "weather": ["🌤️ Always"]},
             {"name": "National Park Pass", "category": "🤖 Other", "weather": ["🌤️ Always"]},
-            {"name": "California Park Pass", "category": "🤖 Other", "weather": ["🌤️ Always"]}
+            {"name": "California Park Pass", "category": "🤖 Other", "weather": ["🌤️ Always"]},
+            {"name": "Camera", "category": "🤖 Other", "weather": ["🌤️ Always"]},
+            {"name": "Notebook", "category": "🤖 Other", "weather": ["🌤️ Always"]},
+            {"name": "Pen", "category": "🤖 Other", "weather": ["🌤️ Always"]},
+            {"name": "Art supplies", "category": "🤖 Other", "weather": ["🌤️ Always"]},
+            {"name": "Reading material", "category": "🤖 Other", "weather": ["🌤️ Always"]},
+            {"name": "Baseball cap", "category": "🤖 Other", "weather": ["🌤️ Always"]},
+            {"name": "Warm beanie", "category": "🤖 Other", "weather": ["❄️ Snow"]},
+            {"name": "Hammock", "category": "🤖 Other", "weather": ["🌤️ Always"]},
+            {"name": "Cards/games", "category": "🤖 Other", "weather": ["🌤️ Always"]},
+            {"name": "Electrolytes", "category": "🤖 Other", "weather": ["🌤️ Always"]}
         ],
         "saved_trips": {}, "deleted_items": []
     }
@@ -164,8 +349,8 @@ for key in ["categories", "weather_profiles", "master_items", "saved_trips", "de
     if key not in st.session_state: 
         st.session_state[key] = default_template[key]
 
-DEFAULT_CHECKED_CATS = ["camping", "cooking", "clothing", "devices", "accessories", "tasks", "other"]
-EMOJIS = ["⛺", "🌊", "🍳", "👕", "🎣", "🛶", "🧗", "🏃", "📱", "🎒", "🧭", "🕶️", "📋", "🚴", "🎿", "✨", "🚌", "🤖", "🌤️", "🔥", "❄️", "⛈️", "💨", "🍂", "💧"]
+DEFAULT_CHECKED_CATS = ["camping", "ambiance", "clothing", "toiletries", "cooking", "devices", "tasks", "other"]
+EMOJIS = ["⛺", "✨", "👕", "🪥", "🍳", "🎒", "🧭", "🌊", "🎣", "🛶", "🧗", "🏃", "🚴", "🎿", "🚌", "📱", "📋", "🤖", "🌤️", "🔥", "❄️"]
 
 # ==========================================
 # --- SIDEBAR SECTION 1: TRIP SETTINGS ---
@@ -175,16 +360,22 @@ st.sidebar.subheader("🌴 Trip Settings")
 st.sidebar.write("**Expected Weather Profiles:**")
 selected_weather = []
 for w_prof in st.session_state.weather_profiles:
-    w_default = "Always" in w_prof
-    if st.sidebar.checkbox(w_prof, value=w_default, key=f"weather_filter_{w_prof}"):
-        selected_weather.append(w_prof)
+    w_prof_clean = w_prof.strip()
+    w_default = "Always" in w_prof_clean
+    w_key = f"weather_filter_{w_prof_clean}"
+    if st.sidebar.checkbox(w_prof, value=w_default, key=w_key):
+        selected_weather.append(w_prof_clean)
 
 st.sidebar.write("**Select Activities / Categories:**")
 selected_categories = []
 for cat in st.session_state.categories:
-    cat_default = any(tgt in cat.lower() for tgt in DEFAULT_CHECKED_CATS)
-    if st.sidebar.checkbox(cat, value=cat_default, key=f"filter_{cat}"):
-        selected_categories.append(cat)
+    cat_strip = cat.strip()
+    clean_cat_name = "".join(c for c in cat_strip if c.isalnum() or c.isspace()).strip().lower()
+    cat_default = any(tgt in clean_cat_name for tgt in DEFAULT_CHECKED_CATS)
+    
+    c_key = f"filter_{cat_strip}"
+    if st.sidebar.checkbox(cat, value=cat_default, key=c_key):
+        selected_categories.append(cat_strip)
 
 st.sidebar.markdown("---")
 
@@ -193,7 +384,6 @@ st.sidebar.markdown("---")
 # ==========================================
 st.sidebar.header("⚙️ Configuration Desk")
 
-# --- EXPANDER: DYNAMIC IMPORT & EXPORT FOR USERS ---
 with st.sidebar.expander("💾 Locker Data Backup (Import/Export)", expanded=False):
     st.write("Keep your custom locker data safe across visits or share templates.")
     
@@ -232,7 +422,6 @@ with st.sidebar.expander("💾 Locker Data Backup (Import/Export)", expanded=Fal
         except Exception as e:
             st.error(f"Error reading file context: {e}")
 
-# --- EXPANDER 1: ITEM MANAGER ---
 with st.sidebar.expander("📦 Gear Item Manager", expanded=False):
     tab_add, tab_edit, tab_delete = st.tabs(["➕ Add Item", "✏️ Edit Tags", "❌ Delete Item"])
     
@@ -285,7 +474,6 @@ with st.sidebar.expander("📦 Gear Item Manager", expanded=False):
                 st.success("Moved item to Trash Bin.")
                 st.rerun()
 
-# --- EXPANDER 2: LAYOUT & CONFIG DATA ---
 with st.sidebar.expander("🛠️ Edit, Reorder & Manage Setup", expanded=False):
     st.subheader("Manage Categories")
     c1, c2 = st.columns([1, 3])
@@ -336,12 +524,10 @@ with st.sidebar.expander("🛠️ Edit, Reorder & Manage Setup", expanded=False)
                         item["weather"] = [st.session_state.weather_profiles[0]]
             st.rerun()
 
-# --- EXPANDER 3: SAVED TRIPS ---
 with st.sidebar.expander("💾 Save / Load Trip Setups", expanded=False):
     trip_name_input = st.text_input("Name this trip view:")
     load_trip = st.selectbox("Load saved trip:", options=["-- Select --"] + list(st.session_state.saved_trips.keys())) if st.session_state.saved_trips else "-- Select --"
 
-# --- EXPANDER 4: RECOVERY SYSTEM ---
 with st.sidebar.expander("🗑️ Item Trash Bin / Recovery", expanded=False):
     if st.session_state.deleted_items:
         trash_opts = [f"{i['name']} ({i['category']})" for i in st.session_state.deleted_items]
@@ -358,27 +544,37 @@ with st.sidebar.expander("🗑️ Item Trash Bin / Recovery", expanded=False):
             st.rerun()
     else: st.info("Trash bin empty.")
 
+# ==================================================
 # --- DYNAMIC MATRIX FILTER CALCULATION ENGINE ---
+# ==================================================
 filtered_items = []
+cleaned_selected_categories = [c.strip() for c in selected_categories]
+cleaned_selected_weather = [w.strip() for w in selected_weather]
+
 for item in st.session_state.master_items:
-    if item["category"] in selected_categories and set(item["weather"]).intersection(set(selected_weather)):
-        filtered_items.append(item)
+    item_cat = item["category"].strip()
+    if item_cat in cleaned_selected_categories:
+        item_weather = [w.strip() for w in item["weather"]]
+        if any(w in cleaned_selected_weather for w in item_weather):
+            filtered_items.append(item)
 
 if trip_name_input and st.sidebar.button("Save Current View as Trip"):
     st.session_state.saved_trips[trip_name_input] = {"categories": selected_categories, "weather": selected_weather, "items": [i["name"] for i in filtered_items]}
     st.sidebar.success(f"Trip '{trip_name_input}' cached!"); st.rerun()
 
+# ==========================================
 # --- MAIN CANVAS OUTPUT VIEWPORT ---
+# ==========================================
 main_col, action_col = st.columns([3, 1])
 
 with main_col:
-    if not filtered_items:
+    if not selected_categories:
         st.info("Adjust your trip settings in the sidebar to populate your dynamic packing checklist!")
     else:
         btn_col1, btn_col2, _ = st.columns([1, 1, 3])
         with btn_col1:
             if st.button("✅ Select All"):
-                for item in filtered_items: st.session_state[f"chk_{item['name']}_{item['category']}"] = True
+                for item in filtered_items: st.session_state[f"chk_{item['name']}_{item['category'].strip()}"] = True
                 st.rerun()
         with btn_col2:
             if st.button("🧹 Clear All"):
@@ -389,18 +585,21 @@ with main_col:
         st.write("💡 *Check items off below to explicitly include them in your final exported file.*")
         current_checked_items = []
         
-        for cat in st.session_state.categories:
-            if cat not in selected_categories: continue
-            cat_items = [i for i in filtered_items if i["category"] == cat]
-            if cat_items:
-                # FEATURE ADDED: Each category is wrapped in an expander component
-                with st.expander(cat, expanded=False):
+        for cat in selected_categories:
+            cat_strip = cat.strip()
+            cat_items = [i for i in filtered_items if i["category"].strip() == cat_strip]
+            
+            with st.expander(cat_strip, expanded=False):
+                if cat_items:
                     for item in cat_items:
-                        chk_key = f"chk_{item['name']}_{cat}"
-                        if chk_key not in st.session_state: st.session_state[chk_key] = True
+                        chk_key = f"chk_{item['name']}_{cat_strip}"
+                        if chk_key not in st.session_state: 
+                            st.session_state[chk_key] = True
                         
                         if st.checkbox(item['name'], key=chk_key):
                             current_checked_items.append(item)
+                else:
+                    st.caption("ℹ️ No gear items in this category match your current weather settings.")
 
 with action_col:
     st.subheader("Action Center")
