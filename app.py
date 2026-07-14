@@ -561,7 +561,6 @@ for item in st.session_state.master_items:
 if trip_name_input and st.sidebar.button("Save Current View as Trip"):
     st.session_state.saved_trips[trip_name_input] = {"categories": selected_categories, "weather": selected_weather, "items": [i["name"] for i in filtered_items]}
     st.sidebar.success(f"Trip '{trip_name_input}' cached!"); st.rerun()
-
 # ==========================================
 # --- MAIN CANVAS OUTPUT VIEWPORT ---
 # ==========================================
@@ -571,17 +570,21 @@ with main_col:
     if not selected_categories:
         st.info("Adjust your trip settings in the sidebar to populate your dynamic packing checklist!")
     else:
-        # Custom CSS to force columns to stay horizontal on narrow mobile screens
+        # Heavily targeted CSS to force individual columns to stay inline on mobile
         st.markdown(
             """
             <style>
+            /* Targets the column wrappers inside the action container */
+            [data-testid="column"] {
+                width: auto !important;
+                flex: 1 1 auto !important;
+                min-width: fit-content !important;
+            }
+            /* Prevents the outer container from forcing a vertical layout stack */
             [data-testid="stHorizontalBlock"] > div {
                 flex-direction: row !important;
                 flex-wrap: nowrap !important;
-            }
-            [data-testid="stHorizontalBlock"] > div > div {
-                min-width: fit-content !important;
-                margin-right: 10px;
+                align-items: center !important;
             }
             </style>
             """,
