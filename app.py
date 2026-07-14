@@ -571,6 +571,23 @@ with main_col:
     if not selected_categories:
         st.info("Adjust your trip settings in the sidebar to populate your dynamic packing checklist!")
     else:
+        # Custom CSS to force columns to stay horizontal on narrow mobile screens
+        st.markdown(
+            """
+            <style>
+            [data-testid="stHorizontalBlock"] > div {
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+            }
+            [data-testid="stHorizontalBlock"] > div > div {
+                min-width: fit-content !important;
+                margin-right: 10px;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+        
         btn_col1, btn_col2, _ = st.columns([1, 1, 3])
         with btn_col1:
             if st.button("✅ Select All"):
