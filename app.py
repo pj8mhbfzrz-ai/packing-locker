@@ -193,11 +193,10 @@ st.sidebar.markdown("---")
 # ==========================================
 st.sidebar.header("⚙️ Configuration Desk")
 
-# --- NEW EXPANDER: DYNAMIC IMPORT & EXPORT FOR USERS ---
-with st.sidebar.expander("💾 Locker Data Backup (Import/Export)", expanded=True):
+# --- EXPANDER: DYNAMIC IMPORT & EXPORT FOR USERS ---
+with st.sidebar.expander("💾 Locker Data Backup (Import/Export)", expanded=False):
     st.write("Keep your custom locker data safe across visits or share templates.")
     
-    # Pack up state data into a clean JSON string
     export_payload = {
         "categories": st.session_state.categories,
         "weather_profiles": st.session_state.weather_profiles,
@@ -220,7 +219,6 @@ with st.sidebar.expander("💾 Locker Data Backup (Import/Export)", expanded=Tru
     if uploaded_file is not None:
         try:
             imported_data = json.load(uploaded_file)
-            # Verify basic required keys exist to protect state stability
             if all(k in imported_data for k in ["categories", "weather_profiles", "master_items"]):
                 st.session_state.categories = imported_data["categories"]
                 st.session_state.weather_profiles = imported_data["weather_profiles"]
@@ -395,13 +393,14 @@ with main_col:
             if cat not in selected_categories: continue
             cat_items = [i for i in filtered_items if i["category"] == cat]
             if cat_items:
-                st.subheader(cat)
-                for item in cat_items:
-                    chk_key = f"chk_{item['name']}_{cat}"
-                    if chk_key not in st.session_state: st.session_state[chk_key] = True
-                    
-                    if st.checkbox(item['name'], key=chk_key):
-                        current_checked_items.append(item)
+                # FEATURE ADDED: Each category is wrapped in an expander component
+                with st.expander(cat, expanded=False):
+                    for item in cat_items:
+                        chk_key = f"chk_{item['name']}_{cat}"
+                        if chk_key not in st.session_state: st.session_state[chk_key] = True
+                        
+                        if st.checkbox(item['name'], key=chk_key):
+                            current_checked_items.append(item)
 
 with action_col:
     st.subheader("Action Center")
