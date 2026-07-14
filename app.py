@@ -72,7 +72,7 @@ def get_default_locker_data():
             {"name": "Trash bags", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
             {"name": "Lanterns", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
             {"name": "Wood", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
-            {"name": "New paper or fire starters", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
+            {"name": "Newspaper or fire starters", "category": "⛺ Camping", "weather": ["🌤️ Always"]},
             {"name": "Hand & toe warmers", "category": "⛺ Camping", "weather": ["❄️ Snow"]},
             
             # ✨ Ambiance
